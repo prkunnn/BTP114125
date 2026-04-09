@@ -22,6 +22,7 @@
         * {
             font-family: 'Noto Sans TC', 'Segoe UI', sans-serif;
             scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -29,6 +30,7 @@
             color: #1e293b;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
 
         /* 英雄區背景 */
@@ -40,32 +42,51 @@
         /* 遊戲區域底座 */
         .game-outer-base {
             background: #7BB2E0; 
-            border-radius: 60px;
-            padding: 20px;
+            border-radius: 30px;
+            padding: 10px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             max-width: 1000px;
             margin: 0 auto;
         }
 
+        @media (min-width: 768px) {
+            .game-outer-base {
+                border-radius: 60px;
+                padding: 20px;
+            }
+        }
+
         #game-wrapper {
             width: 100%;
-            height: 640px;
+            height: auto;
+            min-height: 600px;
             background: #fff;
-            border-radius: 40px;
+            border-radius: 25px;
             position: relative;
             overflow: hidden;
             box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
         }
 
+        @media (min-width: 768px) {
+            #game-wrapper {
+                height: 680px;
+                border-radius: 40px;
+            }
+        }
+
         .screen {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             display: none;
             flex-direction: column;
-            padding: 30px;
+            padding: 20px;
             animation: fadeIn 0.5s ease-out;
         }
+
+        @media (min-width: 768px) {
+            .screen { padding: 30px; position: absolute; top:0; left:0; }
+        }
+
         .screen.active { display: flex; }
 
         @keyframes fadeIn {
@@ -80,38 +101,59 @@
             background: #EBF5FB;
             background-image: radial-gradient(#AED6F1 2px, transparent 2px);
             background-size: 30px 30px;
-            border-radius: 30px;
+            border-radius: 20px;
             border: 4px dashed #AED6F1;
+            min-height: 400px;
+            overflow: hidden;
         }
 
         .level-node {
             position: absolute;
-            width: 80px; height: 80px;
+            width: 60px; height: 60px;
             background: white;
             border: 4px solid #BDC3C7;
             border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 2rem; cursor: pointer; transition: 0.3s;
+            font-size: 1.5rem; cursor: pointer; transition: 0.3s;
             filter: grayscale(1); opacity: 0.5; pointer-events: none; z-index: 5;
+        }
+        @media (min-width: 768px) {
+            .level-node { width: 80px; height: 80px; font-size: 2rem; }
         }
         .level-node.unlocked { filter: grayscale(0); opacity: 1; pointer-events: auto; border-color: var(--info); }
         .level-node.completed { background: var(--primary); color: white; border-color: #27AE60; }
         .level-node:hover { transform: scale(1.1); }
-        .level-label { position: absolute; bottom: -30px; width: 120px; text-align: center; font-weight: bold; color: var(--dark); font-size: 0.9rem; }
+        .level-label { position: absolute; bottom: -25px; width: 100px; text-align: center; font-weight: bold; color: var(--dark); font-size: 0.75rem; white-space: nowrap; }
 
         /* 遊戲介面 */
-        .hud { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #f1f5f9; padding: 10px 25px; border-radius: 20px; }
-        .visual-display { background: #fff; border-radius: 20px; border: 2px solid #e2e8f0; display: flex; justify-content: center; align-items: center; min-height: 350px; }
-        
-        .npc-box { background: var(--dark); color: white; border-radius: 20px; padding: 20px; position: relative; }
-        .npc-name { position: absolute; top: -12px; left: 20px; background: var(--accent); padding: 2px 15px; border-radius: 10px; font-weight: bold; font-size: 0.8rem; }
+        .hud { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #f1f5f9; padding: 10px 15px; border-radius: 15px; font-size: 0.9rem; }
+        @media (min-width: 768px) {
+            .hud { padding: 10px 25px; border-radius: 20px; font-size: 1rem; }
+        }
 
-        .badge { width: 50px; height: 50px; background: #eee; border-radius: 50%; display: flex; justify-content: center; align-items: center; opacity: 0.3; }
+        .visual-display { 
+            background: #fff; 
+            border-radius: 20px; 
+            border: 2px solid #e2e8f0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 250px; 
+            overflow: hidden;
+        }
+        
+        .npc-box { background: var(--dark); color: white; border-radius: 20px; padding: 15px; position: relative; margin-top: 10px; }
+        .npc-name { position: absolute; top: -12px; left: 15px; background: var(--accent); padding: 1px 12px; border-radius: 10px; font-weight: bold; font-size: 0.7rem; }
+
+        .badge { width: 40px; height: 40px; background: #eee; border-radius: 50%; display: flex; justify-content: center; align-items: center; opacity: 0.3; font-size: 1.2rem; }
+        @media (min-width: 768px) {
+            .badge { width: 50px; height: 50px; font-size: 1.5rem; }
+        }
         .badge.earned { opacity: 1; background: var(--secondary); border: 2px solid #D4AC0D; }
 
         /* Overlay */
-        #overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 100; text-align: center; color: white; }
-        .feedback-card { background: white; color: #333; padding: 40px; border-radius: 30px; max-width: 400px; width: 90%; }
+        #overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 100; text-align: center; color: white; padding: 20px; }
+        .feedback-card { background: white; color: #333; padding: 30px; border-radius: 25px; max-width: 400px; width: 100%; }
         
         .shake { animation: shakeEffect 0.5s; }
         @keyframes shakeEffect {
@@ -123,84 +165,72 @@
 </head>
 <body class="bg-slate-50">
 
-<!-- 頂部一頁式介紹 -->
-<header class="hero-bg text-white pt-20 pb-28 px-6 text-center">
+<!-- 頂部介紹 -->
+<header class="hero-bg text-white pt-12 pb-20 px-6 text-center">
     <div class="max-w-4xl mx-auto">
-        <h1 class="text-5xl md:text-6xl font-black mb-6 drop-shadow-xl">🧭 面積迷航：萊姆士之島</h1>
-        <p class="text-xl opacity-90 mb-8">專為五年級設計的平面面積挑戰，成為島嶼守護者！</p>
-        <a href="#game-section" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-slate-800 font-bold text-xl px-10 py-4 rounded-full shadow-xl transition-all">
+        <h1 class="text-4xl md:text-6xl font-black mb-4 drop-shadow-xl">🧭 面積迷航</h1>
+        <p class="text-lg opacity-90 mb-8">專為五年級設計的平面面積挑戰</p>
+        <a href="#game-section" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-slate-800 font-bold text-lg px-8 py-3 rounded-full shadow-xl transition-all">
             開始探險
         </a>
     </div>
 </header>
 
-<!-- 教學指引與課後複習 -->
-<section class="max-w-6xl mx-auto px-6 -mt-12 relative z-10 mb-20">
-    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+<!-- 教學內容區區塊 -->
+<section class="max-w-6xl mx-auto px-4 -mt-10 relative z-10 mb-12">
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
         <div class="grid grid-cols-1 md:grid-cols-3">
-            <!-- 教學特色 -->
-            <div class="p-8 border-b md:border-b-0 md:border-r border-slate-100">
-                <h3 class="text-xl font-bold text-blue-600 mb-4 flex items-center">
-                    <span class="mr-2">🎮</span> 教學特色
-                </h3>
-                <ul class="space-y-3 text-slate-600">
-                    <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> 5 大漸進式挑戰關卡</li>
-                    <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> 動態網格視覺化反饋</li>
-                    <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> 趣味成就勳章系統</li>
+            <div class="p-6 border-b md:border-b-0 md:border-r border-slate-100">
+                <h3 class="font-bold text-blue-600 mb-2 flex items-center">🎮 教學特色</h3>
+                <ul class="text-sm text-slate-600 space-y-1">
+                    <li>• 5 大漸進式挑戰關卡</li>
+                    <li>• 動態網格視覺化反饋</li>
                 </ul>
             </div>
-            <!-- 教學目標 -->
-            <div class="p-8 border-b md:border-b-0 md:border-r border-slate-100 bg-slate-50">
-                <h3 class="text-xl font-bold text-green-600 mb-4 flex items-center">
-                    <span class="mr-2">🎯</span> 教學目標
-                </h3>
-                <ul class="space-y-3 text-slate-600">
-                    <li class="flex items-start"><span class="text-blue-500 mr-2">▶</span> 熟練長正方形面積公式</li>
-                    <li class="flex items-start"><span class="text-blue-500 mr-2">▶</span> 理解「單位平方」概念</li>
-                    <li class="flex items-start"><span class="text-blue-500 mr-2">▶</span> 掌握複合圖形拆解計算</li>
+            <div class="p-6 border-b md:border-b-0 md:border-r border-slate-100 bg-slate-50">
+                <h3 class="font-bold text-green-600 mb-2 flex items-center">🎯 教學目標</h3>
+                <ul class="text-sm text-slate-600 space-y-1">
+                    <li>• 熟練長正方形面積公式</li>
+                    <li>• 理解「單位平方」概念</li>
                 </ul>
             </div>
-            <!-- 課程內容 -->
-            <div class="p-8">
-                <h3 class="text-xl font-bold text-purple-600 mb-4 flex items-center">
-                    <span class="mr-2">📚</span> 課程重點
-                </h3>
-                <div class="space-y-2">
-                    <div class="px-3 py-2 bg-purple-50 rounded-lg text-sm font-medium text-purple-700">教學對象：國小五年級學生</div>
-                    <div class="px-3 py-2 bg-blue-50 rounded-lg text-sm font-medium text-blue-700">主題：平面圖形面積</div>
-                    <div class="px-3 py-2 bg-orange-50 rounded-lg text-sm font-medium text-orange-700">內容：公式應用、複合圖形加總</div>
+            <div class="p-6">
+                <h3 class="font-bold text-purple-600 mb-2 flex items-center">📚 課程重點</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-2 py-1 bg-purple-50 rounded text-xs text-purple-700">小五學生</span>
+                    <span class="px-2 py-1 bg-blue-50 rounded text-xs text-blue-700">平面圖形</span>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- 遊戲核心區段 -->
-<section id="game-section" class="py-12 px-4 bg-slate-100">
+<!-- 遊戲區 -->
+<section id="game-section" class="py-8 px-2 md:px-4 bg-slate-100">
     <div class="game-outer-base">
         <div id="game-wrapper">
             <!-- 開始畫面 -->
-            <div id="start-screen" class="screen active flex flex-col items-center justify-center text-center bg-gradient-to-br from-blue-500 to-green-400 text-white">
-                <div id="start-content" class="flex flex-col items-center">
-                    <div class="text-9xl mb-4 animate-bounce">🧭</div>
-                    <h1 class="text-5xl font-black mb-2">面積迷航</h1>
-                    <p class="text-xl mb-10 opacity-80">萊姆士之島的守護者</p>
-                    <button onclick="goToMap()" class="bg-yellow-400 text-slate-800 font-bold text-3xl px-16 py-5 rounded-full shadow-[0_8px_0_#D4AC0D] active:translate-y-1 active:shadow-none transition-all">進入島嶼</button>
+            <div id="start-screen" class="screen active flex flex-col items-center justify-center text-center bg-gradient-to-br from-blue-500 to-green-400 text-white min-h-[500px]">
+                <div id="start-content" class="flex flex-col items-center p-6">
+                    <div class="text-7xl md:text-9xl mb-4 animate-bounce">🧭</div>
+                    <h1 class="text-4xl md:text-5xl font-black mb-2">面積迷航</h1>
+                    <p class="text-lg mb-8 opacity-80">萊姆士之島的守護者</p>
+                    <button onclick="goToMap()" class="bg-yellow-400 text-slate-800 font-bold text-2xl px-12 py-4 rounded-full shadow-[0_6px_0_#D4AC0D] active:translate-y-1 active:shadow-none transition-all">進入島嶼</button>
                 </div>
             </div>
 
             <!-- 地圖畫面 -->
             <div id="map-screen" class="screen bg-slate-50">
-                <h2 class="text-2xl font-bold text-center mb-4 text-slate-700">🏝️ 萊姆士之島地圖</h2>
+                <h2 class="text-xl font-bold text-center mb-3 text-slate-700">🏝️ 萊姆士之島地圖</h2>
                 <div class="map-container" id="map-area">
-                    <div class="level-node unlocked" id="node-1" style="top: 70%; left: 15%;" onclick="startLevel(0)">🏠<div class="level-label">村莊木屋</div></div>
-                    <div class="level-node" id="node-2" style="top: 45%; left: 25%;" onclick="startLevel(1)">🌾<div class="level-label">活力農田</div></div>
+                    <div class="level-node unlocked" id="node-1" style="top: 70%; left: 10%;" onclick="startLevel(0)">🏠<div class="level-label">村莊木屋</div></div>
+                    <div class="level-node" id="node-2" style="top: 45%; left: 30%;" onclick="startLevel(1)">🌾<div class="level-label">活力農田</div></div>
                     <div class="level-node" id="node-3" style="top: 20%; left: 50%;" onclick="startLevel(2)">🛋️<div class="level-label">居住小鎮</div></div>
-                    <div class="level-node" id="node-4" style="top: 55%; left: 70%;" onclick="startLevel(3)">🎪<div class="level-label">節慶廣場</div></div>
+                    <div class="level-node" id="node-4" style="top: 55%; left: 75%;" onclick="startLevel(3)">🎪<div class="level-label">節慶廣場</div></div>
                     <div class="level-node" id="node-5" style="top: 25%; left: 85%;" onclick="startLevel(4)">⚡<div class="level-label">能量核心</div></div>
                     <canvas id="map-canvas" class="absolute top-0 left-0 w-full h-full pointer-events-none"></canvas>
                 </div>
-                <div class="flex justify-center gap-4 mt-6">
+                <div class="flex justify-center gap-2 md:gap-4 mt-4">
                     <div class="badge" id="badge-ui-0">🏠</div>
                     <div class="badge" id="badge-ui-1">🌾</div>
                     <div class="badge" id="badge-ui-2">🛋️</div>
@@ -212,28 +242,28 @@
             <!-- 挑戰畫面 -->
             <div id="level-screen" class="screen bg-white">
                 <div class="hud text-slate-700">
-                    <div class="flex gap-4 font-bold">
+                    <div class="flex gap-3 font-bold">
                         <span>❤️ <span id="hp-text">3</span></span>
                         <span>⭐ <span id="star-text">0</span></span>
                     </div>
-                    <div class="font-black text-blue-600" id="current-level-name">正在載入...</div>
+                    <div class="font-black text-blue-600 hidden sm:block" id="current-level-name">載入中</div>
                     <div class="font-bold">💡 <span id="hint-text">2</span></div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden">
+                <div class="flex flex-col md:grid md:grid-cols-2 gap-4 flex-grow overflow-y-auto">
                     <div class="visual-display">
-                        <canvas id="game-canvas" width="450" height="350"></canvas>
+                        <canvas id="game-canvas"></canvas>
                     </div>
 
-                    <div class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-3">
                         <div class="npc-box">
                             <div class="npc-name" id="npc-name">NPC</div>
-                            <p class="text-sm md:text-base leading-relaxed" id="dialog-text"></p>
+                            <p class="text-sm leading-relaxed" id="dialog-text"></p>
                         </div>
-                        <div class="bg-slate-50 p-6 rounded-2xl shadow-inner flex-grow flex flex-col justify-center">
+                        <div class="bg-slate-50 p-4 rounded-xl shadow-inner flex flex-col justify-center">
                             <div id="task-ui"></div>
-                            <button class="mt-4 w-full bg-yellow-400 text-slate-800 font-bold py-3 rounded-xl hover:bg-yellow-500 transition-colors" onclick="useHint()">💡 取得教學提示</button>
-                            <button class="mt-2 w-full text-slate-400 text-xs font-bold py-1" onclick="goToMap()">放棄任務返回地圖</button>
+                            <button class="mt-3 w-full bg-yellow-400 text-slate-800 font-bold py-3 rounded-lg text-sm" onclick="useHint()">💡 教學提示</button>
+                            <button class="mt-2 w-full text-slate-400 text-xs py-1" onclick="goToMap()">返回地圖</button>
                         </div>
                     </div>
                 </div>
@@ -242,18 +272,18 @@
             <!-- 反饋層 -->
             <div id="overlay">
                 <div class="feedback-card">
-                    <div id="fb-icon" class="text-7xl mb-4">🎉</div>
-                    <h2 id="fb-title" class="text-2xl font-bold mb-2">修復成功！</h2>
-                    <p id="fb-body" class="text-slate-500 mb-8"></p>
-                    <button id="fb-btn" class="w-full bg-blue-500 text-white font-bold py-4 rounded-2xl text-xl shadow-lg active:scale-95 transition-all">確定</button>
+                    <div id="fb-icon" class="text-6xl mb-3">🎉</div>
+                    <h2 id="fb-title" class="text-xl font-bold mb-1">答對了！</h2>
+                    <p id="fb-body" class="text-sm text-slate-500 mb-6"></p>
+                    <button id="fb-btn" class="w-full bg-blue-500 text-white font-bold py-3 rounded-xl text-lg shadow-lg">確定</button>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<footer class="py-12 text-center text-slate-400 text-sm">
-    <p>© 2025 面積迷航：萊姆士之島 - 全方位數位學習版</p>
+<footer class="py-8 text-center text-slate-400 text-xs">
+    <p>© 2024 面積迷航：萊姆士之島</p>
 </footer>
 
 <script>
@@ -263,14 +293,14 @@
             dialog: "冒險者！房間的長是 6m、寬是 4m。我已經買了 20 m² 的木材，請問還差多少 m² 才夠鋪滿？",
             hint: "面積 = 6 × 4 = 24。24 扣掉現有的 20，就是答案！",
             type: "input", ans: 4, unit: "m²",
-            visual: (ctx) => drawRect(ctx, 6, 4, "6m", "4m", "#D35400")
+            visual: (ctx, w_cv, h_cv) => drawRect(ctx, w_cv, h_cv, 6, 4, "6m", "4m", "#D35400")
         },
         {
             title: "活力農田規劃", npc: "農夫 葛林",
             dialog: "我有這塊 8×6 的土地。其中 30m² 要種蘿蔔，剩下的要種高麗菜。請問高麗菜的面積是多少？",
             hint: "總面積 8 × 6 = 48。48 減去蘿蔔田 30，剩下就是高麗菜田。",
             type: "input", ans: 18, unit: "m²",
-            visual: (ctx) => drawRect(ctx, 8, 6, "8m", "6m", "#27AE60")
+            visual: (ctx, w_cv, h_cv) => drawRect(ctx, w_cv, h_cv, 8, 6, "8m", "6m", "#27AE60")
         },
         {
             title: "居住小鎮地毯", npc: "設計師 蘇菲",
@@ -278,37 +308,36 @@
             hint: "(A)6x6=36 (太大), (B)5x7=35 (剛好), (C)4x8=32 (太小)。",
             type: "choice", ans: 35,
             options: [{ text: "🔵 藍色地毯 (6x6)", val: 36 }, { text: "🟢 綠色地毯 (5x7)", val: 35 }, { text: "🟡 黃色地毯 (4x8)", val: 32 }],
-            visual: (ctx) => drawRect(ctx, 7, 5, "7m", "5m", "#3498DB")
+            visual: (ctx, w_cv, h_cv) => drawRect(ctx, w_cv, h_cv, 7, 5, "7m", "5m", "#3498DB")
         },
         {
             title: "節慶廣場修復", npc: "派對強尼",
             dialog: "廣場由兩塊組成：一塊 4×8，另一塊 4×4。加總起來是多少總面積？",
             hint: "(4 × 8) + (4 × 4) = 32 + 16 = 48。",
             type: "input", ans: 48, unit: "m²",
-            visual: (ctx) => drawLShape(ctx)
+            visual: (ctx, w_cv, h_cv) => drawLShape(ctx, w_cv, h_cv)
         },
         {
             title: "能量核心終極修復", npc: "大祭司 歐姆",
             dialog: "核心由 5×5 的正方形與 10×5 的長方形組成。請問總面積是多少？",
             hint: "5x5=25，10x5=50。兩者相加是 75。",
             type: "input", ans: 75, unit: "m²",
-            visual: (ctx) => drawCombo(ctx)
+            visual: (ctx, w_cv, h_cv) => drawCombo(ctx, w_cv, h_cv)
         }
     ];
 
     let state = { hp: 3, stars: 0, hints: 2, unlocked: 0, currentIdx: -1, badges: [false, false, false, false, false] };
-
-    // 儲存原始開始畫面，避免內文被 showEnding 覆寫後找不回按鈕
     const originalStartHTML = document.getElementById('start-content').innerHTML;
 
     function goToMap() {
         switchScreen('map-screen');
-        renderMap();
+        setTimeout(renderMap, 50);
     }
 
     function switchScreen(id) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
+        window.scrollTo(0, document.getElementById('game-section').offsetTop - 20);
     }
 
     function renderMap() {
@@ -330,14 +359,14 @@
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
-        ctx.setLineDash([5, 5]); ctx.strokeStyle = "#AED6F1"; ctx.lineWidth = 3;
+        ctx.setLineDash([5, 5]); ctx.strokeStyle = "#AED6F1"; ctx.lineWidth = 2;
         for(let i=0; i < state.unlocked; i++) {
             const from = document.getElementById(`node-${i+1}`);
             const to = document.getElementById(`node-${i+2}`);
             if(to) {
                 ctx.beginPath();
-                ctx.moveTo(from.offsetLeft + 40, from.offsetTop + 40);
-                ctx.lineTo(to.offsetLeft + 40, to.offsetTop + 40);
+                ctx.moveTo(from.offsetLeft + from.offsetWidth/2, from.offsetTop + from.offsetHeight/2);
+                ctx.lineTo(to.offsetLeft + to.offsetWidth/2, to.offsetTop + to.offsetHeight/2);
                 ctx.stroke();
             }
         }
@@ -352,23 +381,29 @@
         document.getElementById('dialog-text').innerText = level.dialog;
         document.getElementById('dialog-text').style.color = "white";
         updateHUD();
-        level.visual(document.getElementById('game-canvas').getContext('2d'));
+        
+        // 響應式 Canvas 尺寸調整
+        const cv = document.getElementById('game-canvas');
+        const container = cv.parentElement;
+        cv.width = container.clientWidth;
+        cv.height = container.clientHeight || 250;
+        level.visual(cv.getContext('2d'), cv.width, cv.height);
 
         const ui = document.getElementById('task-ui');
         ui.innerHTML = '';
         if(level.type === 'input') {
             ui.innerHTML = `
-                <div class="flex justify-center items-center gap-2 mb-4">
-                    <input type="number" id="user-ans" placeholder="?" class="w-24 text-2xl p-2 border-2 rounded-xl text-center outline-none focus:border-blue-500">
-                    <span class="text-xl font-bold">${level.unit}</span>
+                <div class="flex justify-center items-center gap-2 mb-3">
+                    <input type="number" id="user-ans" placeholder="?" class="w-20 text-xl p-2 border-2 rounded-lg text-center outline-none focus:border-blue-500">
+                    <span class="text-lg font-bold">${level.unit}</span>
                 </div>
-                <button class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition-all" onclick="checkAnswer()">確認答案</button>
+                <button class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg shadow-lg" onclick="checkAnswer()">確認答案</button>
             `;
         } else {
             level.options.forEach(opt => {
                 const btn = document.createElement('button');
-                btn.className = 'w-full text-left p-4 mb-2 border-2 border-slate-200 rounded-xl hover:bg-blue-50 hover:border-blue-300 font-bold transition-all flex justify-between items-center';
-                btn.innerHTML = `<span>${opt.text}</span> <span class="text-slate-300">➜</span>`;
+                btn.className = 'w-full text-left p-3 mb-2 border-2 border-slate-200 rounded-lg hover:bg-blue-50 font-bold text-sm transition-all';
+                btn.innerHTML = opt.text;
                 btn.onclick = () => checkAnswer(opt.val);
                 ui.appendChild(btn);
             });
@@ -378,7 +413,6 @@
     function checkAnswer(val) {
         const level = LEVELS[state.currentIdx];
         let userVal = val !== undefined ? val : parseInt(document.getElementById('user-ans').value);
-        
         if(isNaN(userVal)) return;
 
         if(userVal === level.ans) {
@@ -391,14 +425,14 @@
             document.getElementById('game-wrapper').classList.add('shake');
             setTimeout(() => document.getElementById('game-wrapper').classList.remove('shake'), 500);
             if(state.hp <= 0) showFeedback(false, "體力耗盡了！再接再厲。");
-            else document.getElementById('dialog-text').innerText = "❌ 算錯囉！長乘以寬的結果再檢查一下吧！";
+            else document.getElementById('dialog-text').innerText = "❌ 算錯囉！再檢查看看！";
         }
     }
 
     function useHint() {
         if(state.hints > 0) {
             state.hints--; updateHUD();
-            document.getElementById('dialog-text').innerText = "💡 老師提示：" + LEVELS[state.currentIdx].hint;
+            document.getElementById('dialog-text').innerText = "💡 提示：" + LEVELS[state.currentIdx].hint;
         }
     }
 
@@ -413,7 +447,7 @@
         ov.style.display = 'flex';
         document.getElementById('fb-icon').innerText = isSuccess ? "🎉" : "⚠️";
         document.getElementById('fb-title').innerText = isSuccess ? "答對了！" : "再試一次";
-        document.getElementById('fb-body').innerText = isSuccess ? "你的計算非常精確，成功修復了地圖！" : msg;
+        document.getElementById('fb-body').innerText = isSuccess ? "你成功幫助了島民！" : msg;
         const btn = document.getElementById('fb-btn');
         btn.onclick = isSuccess ? () => { 
             ov.style.display='none'; 
@@ -423,14 +457,9 @@
     }
 
     function resetGame() {
-        // 重置所有狀態
         state = { hp: 3, stars: 0, hints: 2, unlocked: 0, currentIdx: -1, badges: [false, false, false, false, false] };
         document.getElementById('overlay').style.display = 'none';
-        
-        // 還原開始畫面的 HTML
         document.getElementById('start-content').innerHTML = originalStartHTML;
-        
-        // 切換回地圖並渲染
         goToMap();
     }
 
@@ -438,23 +467,21 @@
         switchScreen('start-screen');
         const content = document.getElementById('start-content');
         content.innerHTML = `
-            <div class="text-9xl mb-4">👑</div>
-            <h1 class="text-4xl font-bold">島嶼傳奇守護者</h1>
-            <p class="my-4 text-xl">你成功收集了所有勳章，獲得了 ${state.stars} 顆星星！</p>
-            <div class="flex gap-4">
-                <button onclick="resetGame()" class="bg-white text-blue-600 font-bold px-10 py-4 rounded-full shadow-lg active:scale-95 transition-all hover:bg-slate-50">重新挑戰</button>
-            </div>
+            <div class="text-7xl mb-4">👑</div>
+            <h1 class="text-3xl font-bold">島嶼傳奇守護者</h1>
+            <p class="my-4 text-base">你獲得了 ${state.stars} 顆星星！</p>
+            <button onclick="resetGame()" class="bg-white text-blue-600 font-bold px-8 py-3 rounded-full shadow-lg">重新挑戰</button>
         `;
     }
 
-    // Canvas 繪製助手
-    function drawRect(ctx, w, h, lw, lh, color) {
-        ctx.clearRect(0,0,450,350); 
-        const s = 30; // 縮放比例
-        const ox = (450 - w*s)/2, oy = (350 - h*s)/2;
+    // --- Canvas 響應式繪製 ---
+    function drawRect(ctx, cvW, cvH, w, h, lw, lh, color) {
+        ctx.clearRect(0,0,cvW,cvH); 
+        const padding = 40;
+        const s = Math.min((cvW - padding*2)/w, (cvH - padding*2)/h);
+        const ox = (cvW - w*s)/2, oy = (cvH - h*s)/2;
         
-        // 繪製背景網格（單位平方概念）
-        ctx.strokeStyle = "#e2e8f0"; ctx.lineWidth = 1;
+        ctx.strokeStyle = "#f1f5f9"; ctx.lineWidth = 1;
         for(let x=0; x<=w; x++) {
             ctx.beginPath(); ctx.moveTo(ox+x*s, oy); ctx.lineTo(ox+x*s, oy+h*s); ctx.stroke();
         }
@@ -462,25 +489,27 @@
             ctx.beginPath(); ctx.moveTo(ox, oy+y*s); ctx.lineTo(ox+w*s, oy+y*s); ctx.stroke();
         }
 
-        ctx.fillStyle = color; ctx.globalAlpha = 0.8;
+        ctx.fillStyle = color; ctx.globalAlpha = 0.7;
         ctx.fillRect(ox, oy, w*s, h*s);
-        ctx.globalAlpha = 1.0; ctx.strokeStyle = "#333"; ctx.lineWidth = 3;
+        ctx.globalAlpha = 1.0; ctx.strokeStyle = "#333"; ctx.lineWidth = 2;
         ctx.strokeRect(ox, oy, w*s, h*s);
 
-        // 標記數值
-        ctx.fillStyle = "#333"; ctx.font = "bold 18px Arial";
-        ctx.fillText(lw, ox + (w*s)/2 - 10, oy - 15);
+        ctx.fillStyle = "#333"; ctx.font = "bold 14px Arial"; ctx.textAlign = "center";
+        ctx.fillText(lw, ox + (w*s)/2, oy - 10);
         ctx.save();
-        ctx.translate(ox - 20, oy + (h*s)/2 + 5);
+        ctx.translate(ox - 10, oy + (h*s)/2);
         ctx.rotate(-Math.PI/2);
         ctx.fillText(lh, 0, 0);
         ctx.restore();
     }
 
-    function drawLShape(ctx) {
-        ctx.clearRect(0,0,450,350);
-        const s = 25, ox = 120, oy = 100;
-        ctx.fillStyle = "#9B59B6"; ctx.globalAlpha = 0.8;
+    function drawLShape(ctx, cvW, cvH) {
+        ctx.clearRect(0,0,cvW,cvH);
+        const padding = 40;
+        const s = Math.min((cvW - padding*2)/8, (cvH - padding*2)/8);
+        const ox = (cvW - 8*s)/2, oy = (cvH - 8*s)/2;
+
+        ctx.fillStyle = "#9B59B6"; ctx.globalAlpha = 0.7;
         ctx.beginPath();
         ctx.moveTo(ox, oy);
         ctx.lineTo(ox+8*s, oy);
@@ -490,28 +519,27 @@
         ctx.lineTo(ox, oy+8*s);
         ctx.closePath();
         ctx.fill();
-        ctx.globalAlpha = 1.0; ctx.strokeStyle = "#333"; ctx.lineWidth = 3; ctx.stroke();
+        ctx.globalAlpha = 1.0; ctx.strokeStyle = "#333"; ctx.lineWidth = 2; ctx.stroke();
         
-        ctx.fillStyle = "#333"; ctx.font = "bold 16px Arial";
-        ctx.fillText("8m", ox + 4*s - 10, oy - 10);
-        ctx.fillText("4m", ox - 35, oy + 4*s);
-        ctx.fillText("4m", ox + 8*s + 10, oy + 2*s);
+        ctx.fillStyle = "#333"; ctx.font = "bold 12px Arial";
+        ctx.fillText("8m", ox + 4*s, oy - 10);
+        ctx.fillText("4m", ox - 25, oy + 4*s);
     }
 
-    function drawCombo(ctx) {
-        ctx.clearRect(0,0,450,350);
-        const s = 15, ox = 100, oy = 150;
-        // 正方形
+    function drawCombo(ctx, cvW, cvH) {
+        ctx.clearRect(0,0,cvW,cvH);
+        const s = Math.min((cvW - 40)/15, (cvH - 40)/10);
+        const ox = (cvW - 15*s)/2, oy = (cvH - 5*s)/2;
         ctx.fillStyle = "#F1C40F"; ctx.fillRect(ox, oy, 5*s, 5*s); ctx.strokeRect(ox, oy, 5*s, 5*s);
-        // 長方形
         ctx.fillStyle = "#E74C3C"; ctx.fillRect(ox+5*s, oy, 10*s, 5*s); ctx.strokeRect(ox+5*s, oy, 10*s, 5*s);
-        
-        ctx.fillStyle = "#333"; ctx.font = "bold 14px Arial";
-        ctx.fillText("5x5", ox + 1.5*s, oy + 3*s);
-        ctx.fillText("10x5", ox + 8.5*s, oy + 3*s);
+        ctx.fillStyle = "#333"; ctx.font = "bold 12px Arial";
+        ctx.fillText("5x5", ox + 1*s, oy + 3*s);
+        ctx.fillText("10x5", ox + 8*s, oy + 3*s);
     }
 
-    window.addEventListener('resize', drawMapPaths);
+    window.addEventListener('resize', () => {
+        if(document.getElementById('map-screen').classList.contains('active')) renderMap();
+    });
 </script>
 </body>
 </html>
